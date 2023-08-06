@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Twitter Detox Timer",
+    "version": "1.0",
+    "description": "Starts a 5-minute timer when you open Twitter.",
+    "permissions": ["activeTab",
+    "notifications",
+    "storage",
+    "alarms",
+    "nativeMessaging",
+    "tabs"],
+    "host_permissions" : ["<all_urls>"],
+    "content_scripts" : [
+        {
+            "matches" : ["<all_urls>"],
+            "js" : ["content.js"]
+        }
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    }
+}
