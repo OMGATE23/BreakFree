@@ -1,0 +1,74 @@
+# Welcome to Grafbase!
+# Define your data models, integrate auth, permission rules, custom resolvers, search, and more with Grafbase.
+
+# Integrate Auth
+# https://grafbase.com/docs/auth
+#
+schema @auth(
+ providers: [{ type: oidc, issuer: "{{ env.ISSUER_URL }}" }]
+ rules: [{allow: public}]
+) {
+  query: Query
+}
+
+# schema @auth(rules: [{ allow: public }]) {
+#  query: Query
+# }
+
+
+
+# Define Data Models
+# https://grafbase.com/docs/database
+type Post @model @search {
+  title: String!
+  slug: String! @unique
+  content: String
+  publishedAt: DateTime
+  comments: [Comment]
+  likes: Int @default(value: 0)
+  tags: [String] @length(max: 5)
+  author: User
+}
+
+type Comment @model @search {
+  post: Post!
+  body: String!
+  likes: Int @default(value: 0)
+  author: User
+}
+
+type User @model @search {
+  id : ID!
+  email : Email! @unique
+  password : String!
+
+  # Extend models with resolvers
+  # https://grafbase.com/docs/edge-gateway/resolvers
+  # gravatar: URL @resolver(name: "user/gravatar")
+}
+
+type Timer @model @search {
+  sub : String!
+  url : String!
+  timer : Time
+  id : ID!
+  lastStarted : Int
+}
+
+type Time {
+  hours : Int
+  minutes : Int
+  seconds : Int
+}
+
+type History @model @search {
+  sub : String!
+  url : String!
+  date : String!
+  duration : Int
+  startTime : Int
+}
+
+# Start your backend
+# https://grafbase.com/docs/cli
+# npx grafbase dev
