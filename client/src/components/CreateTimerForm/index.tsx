@@ -28,13 +28,15 @@ const CreateTimerForm = ({ token }) => {
 
   function checkDuplicateTimer(timer){
     let isDup = false
-    timer.map(({node}) => {
-      if(node.url == selectOption){
-        isDup = true
-      } else {
-        isDup = false
-      }
-    });
+    if(timer?.length > 0){
+      timer.map(({node}) => {
+        if(node.url == selectOption){
+          isDup = true
+        } else {
+          isDup = false
+        }
+      });
+    }
 
     return isDup
   }

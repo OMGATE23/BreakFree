@@ -173,7 +173,7 @@ const DisplayTimers = ({ token }) => {
         </div>
       ) : (
         <div className="m-auto w-[40vh] text-2xl .">
-          Loading...
+          Create New Timers!
         </div>
       )}
       <UpdateTimer setShowUpdateModal = {setShowUpdateModal} modalData = {showUpdateModal}/>
