@@ -92,7 +92,6 @@
       let sub = localStorage.getItem("sub");
       if (TOKEN) {
         chrome.storage.sync.set({ token: JSON.parse(TOKEN), sub }).then(() => {
-          console.log("Value is set");
         });
         clearInterval(tokenInterval);
       }
@@ -120,10 +119,8 @@
       TOKEN = result.token;
       await getUserTimers(result.sub, result.token);
     });
-    console.log(data[isSocialMediaSite].node)
     if((!data[isSocialMediaSite].node.lastStarted || data[isSocialMediaSite].node.lastStarted < (Date.now() - (24*60*60*1000))) || localStorage.getItem("timer") != 'undefined'){
       lastCreatedUpdate(data[isSocialMediaSite].node.id , userToken)
-      console.log(data[isSocialMediaSite].node.lastStarted , (Date.now() - (24*60*60*1000)))
       runTimer();
       window.onfocus = () => {
       runTimer();
@@ -202,7 +199,6 @@
 
   try {
     chrome.runtime.onMessage.addListener((message) => {
-      console.log(message);
     });
   } catch (err) { }
 
@@ -329,7 +325,6 @@
       timeElapsed = Date.now() - startTime;
       drift += timeElapsed - currTime - 1000;
       timer = timerFunction(timer);
-      //console.log(timer)
       modalContent.innerText = `${getFormattedTimeVal(timer.hours)} : ${getFormattedTimeVal(timer.minutes)} : ${getFormattedTimeVal(timer.seconds)}`;
       if (timer.hours <= 0 && timer.minutes <= 0 && timer.seconds <= 0) {
         clearInterval(interval);
@@ -402,7 +397,6 @@
         },
       }),
     });
-    //console.log("this failed!!")
 
     const dataRecieved = await res.json();
     data = (dataRecieved?.data?.timerSearch?.edges)
@@ -442,7 +436,6 @@
     });
 
     let dataR = await res.json()
-    console.log(dataR)
   }
 
   async function lastCreatedUpdate(id , token){
@@ -456,7 +449,6 @@
       }
     }
     `
-    console.log(id)
     const res = await fetch("http://localhost:4000/graphql", {
       method: "POST",
       headers: {
@@ -472,6 +464,5 @@
       }),
     });
     let dataR = await res.json()
-    console.log(dataR)
   }
 })();
