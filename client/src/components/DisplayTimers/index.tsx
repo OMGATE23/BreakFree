@@ -1,8 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useAuth0 } from "@auth0/auth0-react";
-import { ArrowPathIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import React, { useContext, useEffect, useState } from "react";
-import Tooltip from "../Tooltip";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import React, { useEffect, useState } from "react";
 import UpdateTimer from "../UpdateTimer";
 //import trashIcon from "./trash.svg";
 
@@ -142,27 +141,7 @@ const DisplayTimers = ({ token }) => {
                 <div className="flex flex-row md:flex-col gap-2">
                   <div
                     className=" p-2 delete"
-                    onMouseOver={(e) =>
-                      setShowToolTip((prev) => {
-                        if (prev.x === 0 && prev.y === 0) {
-                          return {
-                            show: true,
-                            x: e.clientX,
-                            y: e.clientY,
-                            message: "Delete",
-                          };
-                        }
-                        return prev;
-                      })
-                    }
-                    onMouseLeave={() => {
-                      setShowToolTip({
-                        show: false,
-                        x: 0,
-                        y: 0,
-                        message: "",
-                      });
-                    }}
+                    
                     onClick={() => {
                       setDeletedId(node.id);
                       deleteTimer(node.id);
@@ -171,27 +150,6 @@ const DisplayTimers = ({ token }) => {
                     <TrashIcon className="h-6  cursor-pointer" />
                   </div>
                   <div className="p-2 update"
-                    onMouseOver={(e) =>
-                      setShowToolTip((prev) => {
-                        if (prev.x === 0 && prev.y === 0) {
-                          return {
-                            show: true,
-                            x: e.clientX,
-                            y: e.clientY,
-                            message: "Update",
-                          };
-                        }
-                        return prev;
-                      })
-                    }
-                    onMouseLeave={() => {
-                      setShowToolTip({
-                        show: false,
-                        x: 0,
-                        y: 0,
-                        message: "",
-                      });
-                    }}
 
                     onClick={() => {
                         setShowUpdateModal({show : true , timer : node , token})
@@ -202,16 +160,10 @@ const DisplayTimers = ({ token }) => {
               </div>
             );
           })}
-          {showTooltip.show && (
-            <Tooltip
-              x={showTooltip.x}
-              y={showTooltip.y}
-              message={showTooltip.message}
-            />
-          )}
+
         </div>
       ) : (
-        <div className="m-auto text-2xl">
+        <div className="m-auto w-full text-2xl">
           Loading...
         </div>
       )}
