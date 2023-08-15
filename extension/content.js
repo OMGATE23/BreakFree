@@ -385,7 +385,7 @@
   }
 
   async function getUserTimers(sub, token) {
-    const res = await fetch("http://localhost:4000/graphql", {
+    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -416,7 +416,7 @@
     }`
     let url = new URL(window.location.href)
 
-    const res = await fetch("http://localhost:4000/graphql", {
+    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -449,7 +449,7 @@
       }
     }
     `
-    const res = await fetch("http://localhost:4000/graphql", {
+    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

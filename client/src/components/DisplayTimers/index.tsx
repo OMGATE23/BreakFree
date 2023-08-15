@@ -68,7 +68,7 @@ const DisplayTimers = ({ token }) => {
 
   async function deleteTimer(id: String) {
     try {
-      const res = await fetch("http://localhost:4000/graphql", {
+      const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ const DisplayTimers = ({ token }) => {
 
   async function getUserTimers() {
       try {
-        const res = await fetch("http://localhost:4000/graphql", {
+        const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

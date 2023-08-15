@@ -10,7 +10,7 @@ import { createContext, useEffect, useState } from 'react';
 import {setContext} from '@apollo/client/link/context'
 
 
-const GRAFBASE_API_URL = "http://localhost:4000/graphql"
+const GRAFBASE_API_URL = "https://breakfree-omgate23.grafbase.app/graphql"
 const JWT_TOKEN = ""
 
 export const createApolloLink = (JWT_TOKEN: string) => {

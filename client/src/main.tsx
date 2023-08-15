@@ -10,7 +10,7 @@ import { getOperationAST } from "graphql";
 
 
 
-const GRAFBASE_API_URL = "http://localhost:4000/graphql"
+const GRAFBASE_API_URL = "https://breakfree-omgate23.grafbase.app/graphql"
 // console.log(JWT_TOKEN)
 
 export const createApolloLink = () => {

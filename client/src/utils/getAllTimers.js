@@ -19,7 +19,7 @@ const GET_TIMERS_QUERY = `
 
 export default async function getAllTimers(token , sub) {
     try {
-        const res = await fetch("http://localhost:4000/graphql", {
+        const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

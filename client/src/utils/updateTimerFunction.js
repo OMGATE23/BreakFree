@@ -28,7 +28,7 @@ export default async function updateTimerFunction(id , timer , token) {
   }
 
   try {
-    const res = await fetch("http://localhost:4000/graphql", {
+    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
