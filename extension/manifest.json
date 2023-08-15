@@ -12,6 +12,10 @@
     "history"
   ],
     "host_permissions" : ["<all_urls>"],
+    "web_accessible_resources": [{
+      "resources" : ["plant.png"],
+      "matches" : ["<all_urls>"]
+    }],
     "content_scripts" : [
         {
             "matches" : ["<all_urls>"],
@@ -23,5 +27,8 @@
     },
     "action": {
       "default_popup": "popup.html"
+    },
+    "icons" : {
+      "128" : "plant.png"
     }
 }
