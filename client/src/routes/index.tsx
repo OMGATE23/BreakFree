@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import LandingPage from "./LandingPage"
-import Login from "./Login"
-import Signup from "./Signup"
+import Analytics from "./Analytics"
+import { Link } from "react-router-dom";
 
 interface AllRoutes  {
     title: string;
@@ -12,8 +12,14 @@ interface AllRoutes  {
 export default function AllRoutes() {
     const allRoutes : AllRoutes[] = [
         {title : "LandingPage" , path : "" , element : <LandingPage/>},
-        {title : "Login" , path : "login" , element : <Login/>},
-        {title : "Signup" , path : "signup" , element : <Signup/> }
+        {title : "Analytics" , path : "analytics" , element : <Analytics/>},
+        {title : "Catch" , path : "*" , element :<div className="flex h-[100vh] justify-center items-center">
+            
+            <Link className="text-2xl flex flex-col justify-center items-center gap-6" to='/'>
+                <img className="w-[200px]" src="./assets/plant.png" />
+                Click me to come back!
+            </Link>
+        </div>}
     ]
   return (
     <Routes>
