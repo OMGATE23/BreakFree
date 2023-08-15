@@ -1,5 +1,5 @@
 # BreakFree 🪴
-Your online tool to help you with your social media addiction! 
+Your awesome tool to help you to break free from the shackles of social media addiction!
 
 ## Introduction 👋
 
