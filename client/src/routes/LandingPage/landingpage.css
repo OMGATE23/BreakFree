@@ -1,0 +1,22 @@
+input {
+    outline : 1px solid black
+}
+
+.plant {
+    animation: plant;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  
+  @keyframes plant {
+    0% {
+      scale: 0.5;
+      transform: rotate(0);
+    }
+  
+    100% {
+      scale: 1;
+      transform: rotate(360deg);
+    }
+  }
