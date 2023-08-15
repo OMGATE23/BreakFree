@@ -1,4 +1,3 @@
-import MainLogo from './public/assets/main-logo.svg'
 const HomeNotLoggedIn = () => {
   return (
     <div>

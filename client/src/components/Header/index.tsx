@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import LoginButton from "../LoginButton"
 import { LogoutButton } from "../LogoutButton"
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 export default function Header() {
   const {isAuthenticated} = useAuth0()
