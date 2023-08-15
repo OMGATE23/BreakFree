@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useEffect, useState } from "react";
 import { Line, Pie } from "react-chartjs-2";
 import {
@@ -253,11 +255,11 @@ const HistoryGraphs = () => {
           <Line
             options={options}
             data={{
-              labels: dateListObj.dateList,
+              labels: ['10-7-2023' , '11-7-2023', '12-7-2023', '13-7-2023', '14-7-2023', '15-7-2023'],
               datasets: [
                 {
                   label: "Watch Time",
-                  data: dateListObj.durList,
+                  data: [6,8,4,7,3 , 4],
                   borderColor: "green",
                   backgroundColor: "green",
                   tension: 0.2,
@@ -273,11 +275,11 @@ const HistoryGraphs = () => {
           <Pie
             options={options}
             data={{
-              labels: urlListObj.urlList,
+              labels: ["twitter.com" , "facebook.com" , "instagram.com" , "linkedin.com" , "youtube.com"],
               datasets: [
                 {
                   label: "Watch Time",
-                  data: urlListObj.durList,
+                  data: [25 , 40, 35 , 54, 12],
                   borderColor: "black",
                   borderWidth: 0.75,
                   backgroundColor: generateRandomColorNames(

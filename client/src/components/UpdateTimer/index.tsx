@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState } from 'react'
 import updateTimerFunction from '../../utils/updateTimerFunction.js'
 

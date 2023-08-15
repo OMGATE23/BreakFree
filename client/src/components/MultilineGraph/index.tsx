@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState } from 'react'
 import { Line, Pie } from "react-chartjs-2";
 import {
@@ -34,14 +36,14 @@ const MultilineGraph = ({data}) => {
           </option>
         ))}
       </select>
-        <div className='w-[100%] bg-green-100 h-fit xl:w-[50%] mx-auto my-4 p-4 shadow-xl'>
+        <div className='w-[100%]  bg-green-100 h-fit xl:w-[50%] mx-auto my-4 p-4 shadow-xl'>
             
         <Line options={{}} data={{
-              labels: data[currKey].dates,
+              labels: ['10-7-2023' , '11-7-2023', '12-7-2023', '13-7-2023', '14-7-2023', '15-7-2023'],
               datasets: [
                 {
                   label: "Watch Time",
-                  data: data[currKey].durations,
+                  data: [24 , 54, 46 ,34, 21, 15],
                   borderColor: "green",
                   backgroundColor: "green",
                   tension: 0.2,

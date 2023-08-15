@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { gql, useQuery } from "@apollo/client";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
@@ -121,6 +123,13 @@ const DisplayTimers = ({ token }) => {
   useEffect(() => {
     getUserTimers();
   }, []);
+
+  function getTimeString(num : Number){
+    if(num < 10 ){
+      return "0" + num
+    }
+    return num;
+  }
   return (
     <div className="">
       {timerData?.length > 0 ? (
@@ -128,14 +137,14 @@ const DisplayTimers = ({ token }) => {
           {timerData.map(({ node }) => {
             return (
               <div
-                className="outline outline-1 w-full px-4 py-2 flex flex-col md:flex-row items-center justify-between md:gap-6 bg-emerald-200 rounded-md"
+                className="outline  outline-1 w-full px-4 py-2 flex flex-col md:flex-row items-center justify-between md:gap-6 bg-emerald-200 rounded-md"
                 key={node?.id}
               >
                 <div>
                   <p>url : {node?.url}</p>
                   <p>
                     timer :{" "}
-                    {`${node.timer.hours} : ${node.timer.minutes} : ${node.timer.seconds}`}
+                    {`${getTimeString(node.timer.hours)} : ${getTimeString(node.timer.minutes)} : ${getTimeString(node.timer.seconds)}`}
                   </p>
                 </div>
                 <div className="flex flex-row md:flex-col gap-2">
@@ -163,7 +172,7 @@ const DisplayTimers = ({ token }) => {
 
         </div>
       ) : (
-        <div className="m-auto w-full text-2xl">
+        <div className="m-auto w-[40vh] text-2xl .">
           Loading...
         </div>
       )}

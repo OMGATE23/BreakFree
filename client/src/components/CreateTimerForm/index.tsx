@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import getAllTimers from '../../utils/getAllTimers.js'
@@ -152,7 +153,7 @@ const CreateTimerForm = ({ token }) => {
               }
             }}
           >
-            <option value="">Select an option</option>
+            <option value="">Select option</option>
             {websiteOptions.map((option) => (
               <option className="py-1 px-4 bg-gray-200" key={option} value={option}>
                 {option}

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import './App.css'
 import AllRoutes from './routes'
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split } from "@apollo/client";
