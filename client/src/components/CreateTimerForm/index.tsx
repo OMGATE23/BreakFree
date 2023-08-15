@@ -28,7 +28,7 @@ const CreateTimerForm = ({ token }) => {
 
   function checkDuplicateTimer(timer){
     let isDup = false
-    if(timer?.length > 0){
+    if(Object.keys[timer]){
       timer.map(({node}) => {
         if(node.url == selectOption){
           isDup = true
