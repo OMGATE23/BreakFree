@@ -1,8 +1,8 @@
 
 (async function () {
-  const API_URL = "http://localhost:4000/graphql"
+  const API_URL = "https://breakfree-main-omgate23.grafbase.app/graphql"
   const X_API_KEY = "";
-  const CLIENT_URL = "http://localhost:5173/"
+  const CLIENT_URL = "https://get-break-free.vercel.app/"
   const storageCache = {};
   
   const START_TIME = Date.now()

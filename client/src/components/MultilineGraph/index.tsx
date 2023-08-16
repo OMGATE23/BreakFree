@@ -29,7 +29,9 @@ const MultilineGraph = ({data}) => {
     const [currKey , setCurrKey] = useState(keys[0]);
     console.log("data", data)
   return (
-    <div className='w-[80vw] mx-auto mt-12 mb-12 xl:flex flex-col gap-8' style={{marginBottom: "200px"}}>
+    <>
+      { Object.keys(data).length > 0 && (
+        <div className='w-[80vw] mx-auto mt-12 mb-12 xl:flex flex-col gap-8' style={{marginBottom: "200px"}}>
         <h2 className='w-fit mx-auto text-xl xl:text-2xl text-center'>Time spent per Website Visited {'in mins'}</h2>
         {data && <div className='flex justify-center flex-col gap-4'>
         <select id="urlSelect" onChange={(e) => {setCurrKey(e.target.value); count++}} className='outline outline-1 w-fit m-auto  rounded-md bg-green-300 py-1 px-4'>
@@ -58,6 +60,8 @@ const MultilineGraph = ({data}) => {
         </div>
         </div>}
     </div>
+      ) }
+    </>
   )
 }
 
