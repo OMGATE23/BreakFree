@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import React, { useEffect, useState } from "react";
-import { Line, Pie } from "react-chartjs-2";
+import { Bar, Line, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineElement,
@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  BarElement,
 } from "chart.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import MultilineGraph from "../MultilineGraph";
@@ -22,6 +23,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   ArcElement,
+  BarElement,
   Tooltip,
   Legend
 );
@@ -238,8 +240,7 @@ const HistoryGraphs = () => {
       "violet",
     ];
     for (let i = 0; i < numColors; i++) {
-      const randomIndex = Math.floor(Math.random() * colorNames.length);
-      const colorName = colorNames[randomIndex];
+      const colorName = colorNames[i];
       colors.push(colorName);
     }
 
@@ -253,21 +254,21 @@ const HistoryGraphs = () => {
       <div className="w-[90vw] m-auto min-h-[60vh] mb-24 grid grid-cols-1 xl:grid-cols-2 gap-5">
         <div className="w-[90%] mx-auto xl:w-[100%] flex items-center flex-col justify-center gap-8 shadow-xl bg-green-100 p-4">
           <h2 className="w-fit mx-auto text-xl md:text-2xl text-center">Daily Usage {"(In Hours)"}</h2>
-          <Line
+          <Bar
             options={options}
             data={{
-              labels: ['10-7-2023' , '11-7-2023', '12-7-2023', '13-7-2023', '14-7-2023', '15-7-2023'],
+              labels: dateListObj.dateList,
               datasets: [
                 {
                   label: "Watch Time",
-                  data: [6,8,4,7,3 , 4],
+                  data: dateListObj.durList,
                   borderColor: "green",
-                  backgroundColor: "green",
+                  backgroundColor: ["#fbbf24", "#f87171", "#38bdf8", "#8b5cf6", "#f97316", "#db2777"],
                   tension: 0.2,
                 },
               ],
             }}
-          ></Line>
+          ></Bar>
         </div>
 
         <div className=" w-[90%] mx-auto xl:w-[100%]  flex items-center flex-col justify-center gap-8 shadow-xl p-4 bg-green-100">
@@ -276,16 +277,14 @@ const HistoryGraphs = () => {
           <Pie
             options={options}
             data={{
-              labels: ["twitter.com" , "facebook.com" , "instagram.com" , "linkedin.com" , "youtube.com"],
-              datasets: [
+              labels: urlListObj.urlList
+              ,datasets: [
                 {
                   label: "Watch Time",
-                  data: [25 , 40, 35 , 54, 12],
+                  data: urlListObj.durList,
                   borderColor: "black",
                   borderWidth: 0.75,
-                  backgroundColor: generateRandomColorNames(
-                    urlListObj.durList.length
-                  ),
+                  backgroundColor: generateRandomColorNames(urlListObj.durList.length),
                 },
               ],
             }}

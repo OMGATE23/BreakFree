@@ -1,7 +1,8 @@
-export const API_URL = "http://localhost:4000/graphql"
-export const X_API_KEY = ""
+
 (async function () {
-  
+  const API_URL = "http://localhost:4000/graphql"
+  const X_API_KEY = "";
+  const CLIENT_URL = "http://localhost:5173/"
   const storageCache = {};
   
   const START_TIME = Date.now()
@@ -88,7 +89,7 @@ export const X_API_KEY = ""
   
   let TOKEN = "";
 
-  if (currentUrl.includes("http://localhost:5173/")) {
+  if (currentUrl.includes(CLIENT_URL)) {
     let tokenInterval = setInterval(() => {
       TOKEN = localStorage.getItem("token");
       let sub = localStorage.getItem("sub");
@@ -146,7 +147,7 @@ export const X_API_KEY = ""
       
       modalContent.innerHTML = `
         <div>Times up!</div>
-        <a href = "http://localhost:5173/" class = 'breakfree-link' >Go To BreakFree</a>
+        <a href = "${CLIENT_URL}" class = 'breakfree-link' >Go To BreakFree</a>
       `;
       modalContent.prepend(imgElement)
       const styleEl = document.createElement("style")
@@ -256,7 +257,7 @@ export const X_API_KEY = ""
       
       modalContent.innerHTML = `
         <div>Times up!</div>
-        <a href = "http://localhost:5173/" class = 'breakfree-link' >Go To BreakFree</a>
+        <a href = "${CLIENT_URL}" class = 'breakfree-link' >Go To BreakFree</a>
       `;
       modalContent.prepend(imgElement)
       const styleEl = document.createElement("style")
@@ -352,7 +353,7 @@ export const X_API_KEY = ""
           
           modalContent.innerHTML = `
             <div>Times up!</div>
-            <a href = "http://localhost:5173/" class = 'breakfree-link' >Go To BreakFree</a>
+            <a href = "${CLIENT_URL}" class = 'breakfree-link' >Go To BreakFree</a>
           `;
           modalContent.prepend(imgElement)
           const styleEl = document.createElement("style")

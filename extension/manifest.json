@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Twitter Detox Timer",
+    "name": "BreakFree",
     "version": "1.0",
-    "description": "Starts a 5-minute timer when you open Twitter.",
+    "description": "Your awesome tool to help you to break free from the shackles of social media addiction!",
     "permissions": ["activeTab",
     "notifications",
     "storage",
