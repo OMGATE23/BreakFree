@@ -6,6 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import useTokenFetch from '../../utils/useTokenFetch'
 import DisplayTimers from '../DisplayTimers';
 import CreateTimerForm from '../CreateTimerForm';
+import { API_URL } from "../../constants";
 
 const GET_ALL_USERS = `
   query UserCollection {
@@ -42,7 +43,8 @@ query TimerSearch($sub : String!) {
 
 const HomeLoggedIn = () => {
   const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
-  const [response, setResponse] = useState()
+  const [response, setResponse] = useState();
+  const [refresh, setRefresh] = useState(false);
   const [token, setToken] = useState<null | string>(null)
   //const [createTimer , {createTimerData , createTimerError , createTimerLoading}] = useMutation(createTimerGqlQuery)
 
@@ -86,7 +88,7 @@ const HomeLoggedIn = () => {
     )
     let token = await getAccessToken()
     console.log("timer set TOKEN", token)
-    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+    const res = await fetch(API_URL, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`
@@ -143,8 +145,8 @@ const HomeLoggedIn = () => {
     <div className='flex flex-col items-center gap-8 w-[100vw] min-h-[100vh] justify-center'>
 
       {token && (<div className='flex w-[90vw] gap-8 flex-col sm:flex-row mx-auto justify-center '>
-      <CreateTimerForm token={token} />
-      <DisplayTimers token = {token}/>
+      <CreateTimerForm token={token} refreshData={() => setRefresh(prev => !prev)} />
+      <DisplayTimers token = {token} refresh={refresh}/>
       </div>)}
     </div>
   )

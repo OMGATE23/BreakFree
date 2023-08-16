@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import MultilineGraph from "../MultilineGraph";
+import { API_URL } from "../../constants";
 
 ChartJS.register(
   LineElement,
@@ -85,7 +86,7 @@ const HistoryGraphs = () => {
     let token = JSON.parse(localStorage.getItem("token") + "");
     
     try {
-      const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

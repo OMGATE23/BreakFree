@@ -1,3 +1,4 @@
+import {API_URL} from "../constants"
 const GET_TIMERS_QUERY = `
   query TimerSearch($sub : String!) @live {
     timerSearch(filter: {sub : {eq : $sub}} , first: 50 ){
@@ -19,7 +20,7 @@ const GET_TIMERS_QUERY = `
 
 export default async function getAllTimers(token , sub) {
     try {
-        const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+        const res = await fetch(API_URL, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

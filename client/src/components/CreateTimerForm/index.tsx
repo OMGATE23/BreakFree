@@ -2,6 +2,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from "react";
 import getAllTimers from '../../utils/getAllTimers.js'
+import { API_URL } from "../../constants.js";
 
 const createTimerGqlQuery = `
   mutation TimerCreate($TimerCreateInput : TimerCreateInput!) {
@@ -20,7 +21,7 @@ const createTimerGqlQuery = `
 }
 `;
 
-const CreateTimerForm = ({ token }) => {
+const CreateTimerForm = ({ token, refreshData }) => {
   const [response, setResponse] = useState({positive : true , message : ""});
   const { user } = useAuth0();
   const [selectOption, setSelectOption] = useState("");
@@ -88,7 +89,7 @@ const CreateTimerForm = ({ token }) => {
       });
       return;
     }
-    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -117,6 +118,7 @@ const CreateTimerForm = ({ token }) => {
         message : "Timer Created Succesfully"
       });
     }
+    refreshData();
     if (data.errors) {
       setResponse({
         positive : false,

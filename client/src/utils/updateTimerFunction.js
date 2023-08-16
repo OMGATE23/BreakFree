@@ -1,3 +1,5 @@
+import { API_URL } from "../constants";
+
 const TIMER_UPDATE = `
 mutation TimerUpdate($updateTimer : TimeInput , $updateId : ID!) {
     timerUpdate(by: {id : $updateId} input: {timer : $updateTimer }){
@@ -28,7 +30,7 @@ export default async function updateTimerFunction(id , timer , token) {
   }
 
   try {
-    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

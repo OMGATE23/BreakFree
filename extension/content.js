@@ -1,3 +1,5 @@
+export const API_URL = "http://localhost:4000/graphql"
+export const X_API_KEY = ""
 (async function () {
   
   const storageCache = {};
@@ -385,7 +387,7 @@
   }
 
   async function getUserTimers(sub, token) {
-    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -416,7 +418,7 @@
     }`
     let url = new URL(window.location.href)
 
-    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -449,7 +451,7 @@
       }
     }
     `
-    const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

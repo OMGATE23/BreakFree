@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import UpdateTimer from "../UpdateTimer";
+import { API_URL } from "../../constants";
 //import trashIcon from "./trash.svg";
 
 const GET_TIMERS_QUERY = `
@@ -53,7 +54,7 @@ const DELETE_TIMER = `
     }
 `;
 
-const DisplayTimers = ({ token }) => {
+const DisplayTimers = ({ token, refresh }) => {
   const { user } = useAuth0();
   const [timerData, setTimerData] = useState<Array<any>>([]);
   const [deletedId, setDeletedId] = useState("");
@@ -65,10 +66,13 @@ const DisplayTimers = ({ token }) => {
   });
   const [showUpdateModal , setShowUpdateModal] = useState({show :false , timer: {} , token})
   
+  useEffect(() => {
+    getUserTimers();
+  }, [refresh]);
 
   async function deleteTimer(id: String) {
     try {
-      const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -82,6 +86,7 @@ const DisplayTimers = ({ token }) => {
       });
 
       const dataRecieved = await res.json();
+      getUserTimers();
       console.log(dataRecieved);
     } catch (err) {
       console.log(err);
@@ -90,7 +95,7 @@ const DisplayTimers = ({ token }) => {
 
   async function getUserTimers() {
       try {
-        const res = await fetch("https://breakfree-omgate23.grafbase.app/graphql", {
+        const res = await fetch(API_URL, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
