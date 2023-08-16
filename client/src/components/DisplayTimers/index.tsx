@@ -67,6 +67,7 @@ const DisplayTimers = ({ token, refresh }) => {
   const [showUpdateModal , setShowUpdateModal] = useState({show :false , timer: {} , token})
   
   useEffect(() => {
+    console.log("refreshing")
     getUserTimers();
   }, [refresh]);
 
@@ -95,6 +96,7 @@ const DisplayTimers = ({ token, refresh }) => {
 
   async function getUserTimers() {
       try {
+        console.log("before");
         const res = await fetch(API_URL, {
           method: "POST",
           headers: {
@@ -112,6 +114,7 @@ const DisplayTimers = ({ token, refresh }) => {
         const dataRecieved = await res.json();
 
         setTimerData(dataRecieved?.data?.timerSearch?.edges);
+        console.log("after", dataRecieved?.data?.timerSearch?.edges);
         if (dataRecieved.errors[0]) {
           return (
             <>
@@ -120,6 +123,7 @@ const DisplayTimers = ({ token, refresh }) => {
             </>
           );
         }
+        
       } catch (err) {
         return <p>{JSON.stringify(err)}</p>;
       }

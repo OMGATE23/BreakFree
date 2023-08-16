@@ -44,6 +44,9 @@ const CreateTimerForm = ({ token, refreshData }) => {
 
   async function setTimerFormHandler(e) {
     e.preventDefault();
+    setResponse({
+      message : "Creating...",
+    });
     let timers = await getAllTimers(token , user?.sub)
     console.log(timers)
     console.log(selectOption)
@@ -113,12 +116,16 @@ const CreateTimerForm = ({ token, refreshData }) => {
 
     const data = await res.json();
     if (data.data) {
-      setResponse({
-        positive : true,
-        message : "Timer Created Succesfully"
-      });
-    }
-    refreshData();
+    setTimeout(() => {
+      refreshData();
+      setTimeout(() => {
+        setResponse({
+          positive : true,
+          message : "Timer Created Succesfully"
+        });
+      }, 1000);
+    }, 2000);
+  }
     if (data.errors) {
       setResponse({
         positive : false,
@@ -149,6 +156,9 @@ const CreateTimerForm = ({ token, refreshData }) => {
             id="url"
             name="url"
             onChange={(e) => {
+              setResponse({
+                message : null,
+              });
               if (e.target.value !== "other") {
                 setSelectOption(e.target.value);
                 setShowOtherUrl(false);
@@ -172,7 +182,11 @@ const CreateTimerForm = ({ token, refreshData }) => {
             <input
                 className="md;w-full text-center py-1 px-4 rounded-md outline focus:outline-blue-700 focus:outline-2"
               type="text"
-              onChange={(e) => setSelectOption(e.target.value)}
+              onChange={(e) => {
+                setResponse({
+                message : null,
+              });
+              setSelectOption(e.target.value);}}
             />
           </label>
         )}
@@ -193,7 +207,10 @@ const CreateTimerForm = ({ token, refreshData }) => {
         </div>
         <button className="outline w-fit outline-1 rounded-md bg-green-700 font-semibold text-white py-2 px-6">Set Timer</button>
       </form>
-      {response.message && <div className={`${response.positive ? ' bg-green-600 ' : ' bg-red-600 '} rounded-md w-[80%] py-2 px-2 mx-auto text-center`}>{response.message}</div>}
+      {
+        response.message && response.message.includes("Creating") && <div className={` rounded-md w-[80%] py-2 px-2 mx-auto text-center`}>{response.message}</div>
+      }
+      {response.message && !response.message.includes("Creating") && <div className={`${response?.positive ? ' bg-green-600 ' : ' bg-red-600 '} rounded-md w-[80%] py-2 px-2 mx-auto text-center`}>{response.message}</div>}
     </div>
   );
 };
