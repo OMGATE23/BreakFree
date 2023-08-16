@@ -32,10 +32,8 @@ export default async function getAllTimers(token , sub) {
             },
           }),
         });
-        //console.log("this failed!!")
 
         const dataRecieved = await res.json();
-        console.log(dataRecieved?.data?.timerSearch?.edges)
         if(dataRecieved.data){
         return dataRecieved?.data?.timerSearch?.edges
         }

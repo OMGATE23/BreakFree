@@ -16,7 +16,7 @@ const UpdateTimer = ({ setShowUpdateModal, modalData}) => {
             seconds : Number(formData.get('seconds'))
         }
         let response = await updateTimerFunction(modalData?.timer?.id , timer , modalData?.token)
-        console.log(response)
+        
         if(response === 'Timer Updated Successfully!'){
             setTimeout(() => {
                 setShowUpdateModal({ show: false, timer: {} })

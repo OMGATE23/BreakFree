@@ -1,15 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
 const LoginButton = () => {
-  const {loginWithRedirect , user } = useAuth0();
+  const {loginWithRedirect } = useAuth0();
   //auth0|64d2135e7f18450dc24e6cbd
   //auth0|64d2135e7f18450dc24e6cbd
   //google-oauth2|111515898458218600429
 
   async function login () {
     await loginWithRedirect()
-    console.log(user)
-    //console.log(process.env.JWT_SECRET)
   }
   return (
      (<div className="flex gap-4">

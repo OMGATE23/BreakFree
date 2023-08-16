@@ -100,7 +100,6 @@ const HistoryGraphs = () => {
           },
         }),
       });
-      //console.log("this failed!!")
 
       const dataRecieved = await res.json();
       let data = dataRecieved?.data?.historySearch?.edges;
@@ -144,12 +143,9 @@ const HistoryGraphs = () => {
         return datePartsA[0] - datePartsB[0];
       })
 
-      console.log("here",tempArr);
 
       const dateList = tempArr.map(el => el.date);
       const durList = tempArr.map(el => el.dur);
-
-      console.log("here",dateList)
 
       setDateListObj({dateList, durList});
 

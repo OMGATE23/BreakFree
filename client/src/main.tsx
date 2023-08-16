@@ -11,13 +11,9 @@ import { getOperationAST } from "graphql";
 
 
 const GRAFBASE_API_URL = "https://breakfree-omgate23.grafbase.app/graphql"
-// console.log(JWT_TOKEN)
 
 export const createApolloLink = () => {
-  //console.log("Heree")
   const JWT_TOKEN = (localStorage.getItem('token')!);
-  //console.log(JWT_TOKEN);
-
   const sseLink = new SSELink({
     uri: GRAFBASE_API_URL,
     headers: {
@@ -41,7 +37,6 @@ export const createApolloLink = () => {
 }
 
 const link = createApolloLink()
-//console.log("link", link)
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),

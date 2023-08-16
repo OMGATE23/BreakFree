@@ -48,9 +48,6 @@ const CreateTimerForm = ({ token, refreshData }) => {
       message : "Creating...",
     });
     let timers = await getAllTimers(token , user?.sub)
-    console.log(timers)
-    console.log(selectOption)
-    console.log(checkDuplicateTimer(timers))
     let formData = new FormData(e.target);
 
     if(checkDuplicateTimer(timers)){
@@ -72,7 +69,6 @@ const CreateTimerForm = ({ token, refreshData }) => {
       },
     };
 
-    console.log(TimerCreateInput);
     if (TimerCreateInput.url === "") {
       setResponse({
         positive : false,
@@ -112,7 +108,6 @@ const CreateTimerForm = ({ token, refreshData }) => {
         },
       }),
     });
-    //console.log("this failed!!")
 
     const data = await res.json();
     if (data.data) {

@@ -15,8 +15,6 @@ mutation TimerUpdate($updateTimer : TimeInput , $updateId : ID!) {
 `;
 
 export default async function updateTimerFunction(id , timer , token) {
-  console.log('updating timer')
-  console.log({id , timer , token})
   if(!token){
     return 'Token not found , Please log back in!'
   }
@@ -49,7 +47,6 @@ export default async function updateTimerFunction(id , timer , token) {
     });
 
     const dataRecieved = await res.json();
-    console.log(dataRecieved)
     if(dataRecieved.data){
       return 'Timer Updated Successfully!'
     }

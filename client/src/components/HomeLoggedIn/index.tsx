@@ -70,8 +70,6 @@ const HomeLoggedIn = () => {
     e.preventDefault()
 
     let formData = new FormData(e.target)
-    console.log(formData.get('url'))
-    console.log(user?.sub)
     let variableForCreateTimer = {
       TimerCreateInput: {
         url: formData.get('url'),
@@ -83,11 +81,7 @@ const HomeLoggedIn = () => {
         }
       }
     }
-    console.log(
-      (variableForCreateTimer)
-    )
     let token = await getAccessToken()
-    console.log("timer set TOKEN", token)
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: {
@@ -108,11 +102,8 @@ const HomeLoggedIn = () => {
         }
       })
     })
-    //console.log("this failed!!")
 
     const data = await res.json();
-    console.log(data)
-    console.log(data?.data?.timerSearch?.edges)
     setResponse(data)
   }
   const websiteOptions = [

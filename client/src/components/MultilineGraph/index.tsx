@@ -27,7 +27,6 @@ let count = 0;
 const MultilineGraph = ({data}) => {
     let keys = Object.keys(data)
     const [currKey , setCurrKey] = useState(keys[0]);
-    console.log("data", data)
   return (
     <>
       { Object.keys(data).length > 0 && (

@@ -8,25 +8,14 @@ chrome.runtime.onInstalled.addListener(({reason}) => {
 
 chrome.tabs.onUpdated.addListener(async (tabId , tab) => {
 
-    console.log({tab , tabId})
     
     if(tab){
-        console.log('tried sending message' , tab)
         chrome.tabs.sendMessage(tabId,{
             type : "NEW",
             videoId : tab
         })
     }
-    
-    if(tab.url){
-        console.log(tab.url)
-
-        
-    }
     let obj = await getActiveTabURL()
-
-    
-
 })
 
 async function getActiveTabURL(){
