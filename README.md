@@ -48,3 +48,17 @@ Social media addiction often stems from unchecked habits. BreakFree addresses th
 - Backend: Grafbase for GraphQL.
 - User Authentication: Auth0.
 
+## Steps to run locally
+
+### To install the extension
+- The extension is in the folder `extension`
+- Go to Chrome browser
+- Open Manage extensions
+- Switch on the developer mode
+- Click on `Load unpacked`
+- Select the folder `extension` from this repo
+
+## To run the client app
+- Go to client directory `cd client`
+- Install dependencies `npm i`
+- Run the app `npm run dev`
