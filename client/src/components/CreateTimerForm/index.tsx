@@ -1,213 +1,171 @@
-// @ts-nocheck
-import { useAuth0 } from "@auth0/auth0-react";
-import React, { useState } from "react";
-import getAllTimers from '../../utils/getAllTimers.js'
-import { API_URL } from "../../constants.js";
+import React, {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import useFirestore from "../../hooks/useFirestore";
+export type TimerResponse = {
+  response: string | null;
+  errorOccured: boolean;
+};
 
-const createTimerGqlQuery = `
-  mutation TimerCreate($TimerCreateInput : TimerCreateInput!) {
-  timerCreate(input: $TimerCreateInput){
-    timer {
-      sub
-      id
-      url
-      timer {
-        hours
-        minutes
-        seconds
-      }
+export type TimerData = {
+  url: string;
+  hours: number;
+  seconds: number;
+  minutes: number;
+};
+function CreateTimerForm({
+  timers,
+  setTimers,
+}: {
+  timers: any;
+  setTimers: Dispatch<SetStateAction<any>>;
+}) {
+  const [url, setUrl] = useState("");
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [response, setResponse] = useState<TimerResponse>({
+    response: null,
+    errorOccured: false,
+  });
+
+  let { addTimer, getAllTimers } = useFirestore();
+  const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSelectedOption(value);
+    if (value === "other") {
+      setUrl("");
+    } else {
+      setUrl(value);
     }
-  }
-}
-`;
-
-const CreateTimerForm = ({ token, refreshData }) => {
-  const [response, setResponse] = useState({positive : true , message : ""});
-  const { user } = useAuth0();
-  const [selectOption, setSelectOption] = useState("");
-  const [showOtherUrl, setShowOtherUrl] = useState(false);
-
-  function checkDuplicateTimer(timer){
-    let isDup = false
-    if(Array.isArray(timer)){
-      timer.map(({node}) => {
-        if(node.url == selectOption){
-          isDup = true
-        } else {
-          isDup = false
-        }
-      });
-    }
-
-    return isDup
-  }
-
-  async function setTimerFormHandler(e) {
+  };
+  const handleCustomUrlChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setUrl(event.target.value);
+  };
+  function submitHandler(e: FormEvent) {
     e.preventDefault();
-    setResponse({
-      message : "Creating...",
-    });
-    let timers = await getAllTimers(token , user?.sub)
-    let formData = new FormData(e.target);
-
-    if(checkDuplicateTimer(timers)){
+    if (hours === 0 && minutes === 0 && seconds === 0) {
       setResponse({
-        positive : false,
-        message : "Timer for the url is already set"
+        response: "Set Timer of Minimum 5 minuts",
+        errorOccured: true,
       });
-      return
+      setMinutes(5);
+      setHours(0);
+      setSeconds(0);
+      return;
     }
 
-
-    let TimerCreateInput = {
-      url: selectOption,
-      sub: user?.sub,
-      timer: {
-        hours: Number(formData.get("hours")),
-        minutes: Number(formData.get("minutes")),
-        seconds: Number(formData.get("seconds")),
-      },
-    };
-
-    if (TimerCreateInput.url === "") {
+    if (!url) {
       setResponse({
-        positive : false,
-        message : "Please enter valid URL"
+        response: "Url is necessary for creating timer",
+        errorOccured: true,
       });
       return;
     }
 
-    if (
-      TimerCreateInput.timer.hours === 0 &&
-      TimerCreateInput.timer.minutes === 0 &&
-      TimerCreateInput.timer.seconds === 0
-    ) {
+    if (checkTimerExists(url)) {
       setResponse({
-        positive : false,
-        message : "Please enter timer time"
+        response: "Timer already exists",
+        errorOccured: true,
       });
       return;
     }
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        query: createTimerGqlQuery,
-        variables: {
-          TimerCreateInput: {
-            url: selectOption,
-            sub: user?.sub,
-            timer: {
-              hours: Number(formData.get("hours")),
-              minutes: Number(formData.get("minutes")),
-              seconds: Number(formData.get("seconds")),
-            },
-          },
-        },
-      }),
-    });
+    let timer: TimerData = { url, hours, minutes, seconds };
+    addTimer(timer, setResponse, setTimers);
+  }
 
-    const data = await res.json();
-    if (data.data) {
-    setTimeout(() => {
-      refreshData();
-      setTimeout(() => {
-        setResponse({
-          positive : true,
-          message : "Timer Created Succesfully"
-        });
-      }, 1000);
-    }, 2000);
-  }
-    if (data.errors) {
-      setResponse({
-        positive : false,
-        message : data.errors[0].message
-      });
+  function checkTimerExists(url: string) {
+    if (Array.isArray(timers)) {
+      return timers.filter((timer: TimerData) => timer.url === url).length > 0;
     }
+    return true;
   }
-  const websiteOptions = [
-    "instagram.com",
-    "linkedin.com",
-    "facebook.com",
-    "twitter.com",
-    "youtube.com",
-    "twitch.tv",
-    "threads.com",
-  ];
+  useEffect(() => {
+    getAllTimers(setTimers);
+  }, []);
   return (
-    <div className="shadow-lg min-h-[60vh] flex flex-col md:w-fit md:mx-auto rounded-md pt-2 pb-4 outline outline-3 outline-green-700 px-8 justify-center bg-green-50">
-        <h2 className="text-center text-2xl mt-2 font-medium text-green-700 ">Create Timer</h2>
-      <form
-        className="flex flex-col items-center gap-8 justify-between max-h-full rounded-xl md:w-fit mx-auto px-8 py-6 pb-4"
-        onSubmit={setTimerFormHandler}
-      >
-        <label className="flex flex-col md:flex-row justify-between md:w-full items-center gap-1 md:gap-4" htmlFor="url">
-          <p>Select a Website:</p>
-          <select
-            className=" w-full md:w-[80%] rounded-md bg-green-300 py-1 px-4"
-            id="url"
-            name="url"
-            onChange={(e) => {
-              setResponse({
-                message : null,
-              });
-              if (e.target.value !== "other") {
-                setSelectOption(e.target.value);
-                setShowOtherUrl(false);
-              } else {
-                setShowOtherUrl(true);
-              }
-            }}
-          >
-            <option value="">Select option</option>
-            {websiteOptions.map((option) => (
-              <option className="py-1 px-4 bg-gray-200" key={option} value={option}>
-                {option}
-              </option>
-            ))}
-            <option>other</option>
-          </select>
-        </label>
-        {showOtherUrl && (
-          <label className="w-full flex md:flex-row flex-col gap-2 justify-center items-center">
-            Enter other URL:
-            <input
-                className="md;w-full text-center py-1 px-4 rounded-md outline focus:outline-blue-700 focus:outline-2"
-              type="text"
-              onChange={(e) => {
-                setResponse({
-                message : null,
-              });
-              setSelectOption(e.target.value);}}
-            />
-          </label>
-        )}
-
-        <div className="grid grid-cols-3 justify-center gap-8">
-          <label className="flex items-center flex-col gap-4">
-            hours:
-            <input className="block py-1 px-2 rounded-md focus:outline-2 outline focus:outline-blue-600" name="hours" type="number" max="1" min="0" />
-          </label>
-          <label className="flex items-center flex-col gap-4">
-            mins:
-            <input className="block py-1 px-2 rounded-md focus:outline-2 outline focus:outline-blue-600" name="minutes" type="number" max="59" min="0" />
-          </label>
-          <label className="flex items-center flex-col gap-4">
-            sec:
-            <input className="block py-1 px-1 rounded-md focus:outline-2 outline focus:outline-blue-600" name="seconds" type="number" max="59" min="0" />
-          </label>
+    <div className="outline outline-1 rounded-md p-8 bg-green-100">
+      <h1 className="text-2xl text-green-900 mb-4 text-center font-semibold">
+        Create Timers!
+      </h1>
+      <form className="flex flex-col gap-4" onSubmit={submitHandler}>
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between gap-4">
+            <label>URL:</label>
+            <select
+              className="bg-green-50 outline outline-1 w-full px-2 py-1 rounded-md"
+              value={selectedOption}
+              onChange={handleOptionChange}
+            >
+              <option value="">Select URL</option>
+              <option value="instagram.com">instagram.com</option>
+              <option value="linkedin.com">linkedin.com</option>
+              <option value="facebook.com">facebook.com</option>
+              <option value="twitter.com">twitter.com</option>
+              <option value="youtube.com">youtube.com</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          {selectedOption === "other" && (
+            <div className="">
+              <label className="flex items-center justify-between gap-4">
+                Enter URL:
+                <input
+                  className="px-2 py-1 bg-green-50 w-[90%] rounded-md"
+                  type="text"
+                  value={url}
+                  onChange={handleCustomUrlChange}
+                  placeholder="Enter custom URL"
+                />
+              </label>
+            </div>
+          )}
         </div>
-        <button className="outline w-fit outline-1 rounded-md bg-green-700 font-semibold text-white py-2 px-6">Set Timer</button>
+        <div className="flex items-center justify-between gap-4">
+          <label>Hours:</label>
+          <input
+            className="px-2 py-1 bg-green-50 w-[50%] rounded-md"
+            type="number"
+            value={hours}
+            onChange={(e) => setHours(Number(e.target.value))}
+          />
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <label>Minutes:</label>
+          <input
+            className="px-2 py-1 bg-green-50 w-[50%] rounded-md"
+            type="number"
+            value={minutes}
+            onChange={(e) => setMinutes(Number(e.target.value))}
+          />
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <label>Seconds:</label>
+          <input
+            className="px-2 py-1 bg-green-50 w-[50%] rounded-md"
+            type="number"
+            value={seconds}
+            onChange={(e) => setSeconds(Number(e.target.value))}
+          />
+        </div>
+        <button type="submit">Submit Form</button>
       </form>
-      {
-        response.message && response.message.includes("Creating") && <div className={` rounded-md w-[80%] py-2 px-2 mx-auto text-center`}>{response.message}</div>
-      }
-      {response.message && !response.message.includes("Creating") && <div className={`${response?.positive ? ' bg-green-600 ' : ' bg-red-600 '} rounded-md w-[80%] py-2 px-2 mx-auto text-center`}>{response.message}</div>}
+      <p
+        className={`my-4 text-center ${
+          response.errorOccured ? "text-red-700" : "text-green-700"
+        }`}
+      >
+        {response.response}
+      </p>
     </div>
   );
-};
+}
 
 export default CreateTimerForm;

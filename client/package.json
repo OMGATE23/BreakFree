@@ -17,6 +17,7 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.3.3",
     "dotenv": "^16.3.1",
+    "firebase": "^10.8.1",
     "graphql": "^16.7.1",
     "jose": "^4.14.4",
     "jsonwebtoken": "^9.0.1",
