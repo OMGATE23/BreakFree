@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import useFirestore from "../../hooks/useFirestore";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { useAuthContext } from "../../hooks/useAuthContext";
 export default function DisplayTimers({
   timers,
   setTimers,
@@ -9,8 +10,10 @@ export default function DisplayTimers({
   setTimers: Dispatch<SetStateAction<any>>;
 }) {
   let { getAllTimers, deleteTimer } = useFirestore();
+  let { state } = useAuthContext();
+  let { user } = state;
   useEffect(() => {
-    getAllTimers(setTimers);
+    if (user) getAllTimers(user.uid, setTimers);
   }, []);
 
   function deleteTimerHandler(id: string) {
