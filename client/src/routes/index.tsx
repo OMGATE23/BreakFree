@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import LandingPage from "./LandingPage";
 import Analytics from "./Analytics";
 import { Link } from "react-router-dom";
+import BreakFreeIframe from "./BreakFreeIframe";
 interface AllRoutes {
   title: string;
   path: string;
@@ -10,6 +11,11 @@ interface AllRoutes {
 const allRoutes: AllRoutes[] = [
   { title: "LandingPage", path: "", element: <LandingPage /> },
   { title: "Analytics", path: "analytics", element: <Analytics /> },
+  {
+    title: "BreakFreeIframe",
+    path: "breakfreeiframe",
+    element: <BreakFreeIframe />,
+  },
   {
     title: "Catch",
     path: "*",
