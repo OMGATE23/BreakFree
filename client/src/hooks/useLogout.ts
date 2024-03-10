@@ -16,7 +16,7 @@ export default function useLogout() {
     try {
       await signOut(auth);
       dispatch({ type: "LOGOUT" });
-
+      localStorage.removeItem("user_id");
       if (!isCancelled) {
         setIsPending(false);
         setError(null);

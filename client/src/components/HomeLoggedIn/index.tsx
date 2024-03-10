@@ -6,11 +6,7 @@ import { useState } from "react";
 const HomeLoggedIn = () => {
   let { state } = useAuthContext();
   let { user } = state;
-  //const [createTimer , {createTimerData , createTimerError , createTimerLoading}] = useMutation(createTimerGqlQuery)
   const [timers, setTimers] = useState();
-  if (user) {
-    localStorage.setItem("sub", user.uid);
-  }
 
   return (
     <div className="flex flex-col items-center gap-8 w-[100vw] min-h-[80dvh] justify-center">

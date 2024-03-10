@@ -7,7 +7,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 export default function LandingPage() {
   const { state } = useAuthContext();
   let { authIsReady, user } = state;
-
+  console.log(user);
   if (!authIsReady) {
     return (
       <div className="flex w-[100vw] h-[100vh] flex-col justify-center items-center gap-8">

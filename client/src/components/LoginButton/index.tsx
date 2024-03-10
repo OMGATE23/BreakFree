@@ -10,12 +10,6 @@ const LoginButton = () => {
       >
         Login
       </button>
-      <button
-        className="text-xl p-2 px-4 rounded-md bg-white outline outline-1 text-emerald-700 cursor-pointer"
-        onClick={login}
-      >
-        Sign Up
-      </button>
     </div>
   );
 };
