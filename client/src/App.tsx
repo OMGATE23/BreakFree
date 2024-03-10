@@ -1,9 +1,15 @@
 import "./App.css";
 import AllRoutes from "./routes";
 import { useAuthContext } from "./hooks/useAuthContext";
+import { useEffect } from "react";
 function App() {
   let { state } = useAuthContext();
-  let { authIsReady } = state;
+  let { authIsReady, user } = state;
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user_id", user.uid);
+    }
+  }, [user]);
   return (
     <div>
       {authIsReady && (
