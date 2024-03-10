@@ -7,10 +7,10 @@ export default function Header() {
   let { state } = useAuthContext();
   let { user } = state;
   return (
-    <nav className="p-4 bg-white top-0 text-2xl w-[100vw] flex justify-between items-center ">
+    <nav className="p-4 bg-white text-2xl flex justify-evenly md:justify-between items-center ">
       <img className="block w-[48px]" src={"./assets/plant.png"} />
       {user && (
-        <div className="text-lg flex justify-center gap-12 w-[50%]">
+        <div className="text-lg flex justify-center gap-2 md:gap-12 w-[50%]">
           <NavLink
             className="text-green-700"
             style={({ isActive }) => ({
