@@ -28,7 +28,6 @@ const BreakFreeIframe = () => {
         }
 
         case "CREATE_HISTORY": {
-          console.log("Create a History");
           break;
         }
         default: {

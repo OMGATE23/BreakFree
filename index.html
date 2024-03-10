@@ -11,7 +11,6 @@
     <script>
       window.addEventListener("message", (e) => {
         const data = e.data;
-        console.log(">>> data in index.html", data);
 
         switch (data.type) {
           case "INIT": {
@@ -20,7 +19,6 @@
             break;
           }
           case "RES_TIMER": {
-            console.log(">>> timer data", data);
             break;
           }
           default: {

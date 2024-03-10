@@ -30,7 +30,6 @@ window.addEventListener("message", (e) => {
       break;
     }
     case "RES_TIMER": {
-      console.log(">>>", data.timer);
       if (data.timer) {
         initiateTimer(data.timer);
         document.addEventListener("visibilitychange", () => {
@@ -49,8 +48,6 @@ window.addEventListener("message", (e) => {
 });
 
 function initiateTimer(timer) {
-  if (!timer) console.log({ timer });
-
   const modal = document.createElement("div");
   modal.style.position = "fixed";
   modal.style.bottom = "10px";
@@ -75,17 +72,13 @@ function initiateTimer(timer) {
 
   if (window.location.href.includes("https://get-break-free.vercel.app/")) {
     let checker = setInterval(() => {
-      console.log("checking....");
       if (localStorage.getItem("user_id")) {
         chrome.storage.local.set(
           { user_id: localStorage.getItem("user_id") },
           function () {
             if (chrome.runtime.lastError) {
               console.error(chrome.runtime.lastError);
-            } else {
-              console.log(
-                'Successfully stored "user_id" property in Chrome Storage'
-              );
+              clearInterval(checker);
             }
           }
         );
