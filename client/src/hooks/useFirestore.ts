@@ -27,7 +27,7 @@ export default function useFirestore() {
         ...data,
         user_id: user.uid,
       });
-      await getAllTimers(setTimers);
+      await getAllTimers(user.uid, setTimers);
       return setResponse({
         response: "Timer created!",
         errorOccured: false,
@@ -37,15 +37,12 @@ export default function useFirestore() {
     }
   }
 
-  async function getAllTimers(setTimers: Dispatch<SetStateAction<any>>) {
+  async function getAllTimers(
+    uid: string,
+    setTimers: Dispatch<SetStateAction<any>>
+  ) {
     try {
-      if (!user) {
-        return;
-      }
-      const q = query(
-        collection(db, "timers"),
-        where("user_id", "==", user.uid)
-      );
+      const q = query(collection(db, "timers"), where("user_id", "==", uid));
       const docSnap = await getDocs(q);
       let timers: any[] = [];
       docSnap.forEach((doc) => {
@@ -58,6 +55,7 @@ export default function useFirestore() {
         });
       });
       setTimers(timers);
+      return timers;
     } catch (err) {
       console.log(err);
       setTimers({ err, errorOccured: true });
@@ -73,7 +71,7 @@ export default function useFirestore() {
         return;
       }
       await deleteDoc(doc(db, "timers", id));
-      await getAllTimers(setTimers);
+      await getAllTimers(user.uid, setTimers);
     } catch (error: any) {
       console.log(error);
     }

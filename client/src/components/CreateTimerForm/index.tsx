@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import useFirestore from "../../hooks/useFirestore";
+import { useAuthContext } from "../../hooks/useAuthContext";
 export type TimerResponse = {
   response: string | null;
   errorOccured: boolean;
@@ -33,7 +34,8 @@ function CreateTimerForm({
     response: null,
     errorOccured: false,
   });
-
+  let { state } = useAuthContext();
+  let { user } = state;
   let { addTimer, getAllTimers } = useFirestore();
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -88,7 +90,7 @@ function CreateTimerForm({
     return true;
   }
   useEffect(() => {
-    getAllTimers(setTimers);
+    if (user) getAllTimers(user.uid, setTimers);
   }, []);
   return (
     <div className="outline outline-1 rounded-md p-8 bg-green-100">
