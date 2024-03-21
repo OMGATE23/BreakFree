@@ -1,5 +1,7 @@
 const iframeEl = document.createElement("iframe");
-iframeEl.src = "http://localhost:5173/breakfreeiframe";
+iframeEl.src = "https://get-break-free.vercel.app/breakfreeiframe";
+iframeEl.style.width = "0px";
+iframeEl.style.height = "0px";
 document.body.appendChild(iframeEl);
 let timerInformation = null;
 let timerInterval;
