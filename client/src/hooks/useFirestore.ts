@@ -76,10 +76,27 @@ export default function useFirestore() {
       console.log(error);
     }
   }
-
+  async function addHistory(data: {
+    user_id: string;
+    domain: string;
+    time: number;
+  }) {
+    try {
+      if (!data.user_id) {
+        return;
+      }
+      await addDoc(collection(db, "timers"), {
+        ...data,
+        createdAt: new Date(Date.now()),
+      });
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
   return {
     addTimer,
     getAllTimers,
     deleteTimer,
+    addHistory,
   };
 }
