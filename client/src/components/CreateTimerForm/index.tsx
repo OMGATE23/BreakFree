@@ -55,12 +55,10 @@ function CreateTimerForm({
     e.preventDefault();
     if (hours === 0 && minutes === 0 && seconds === 0) {
       setResponse({
-        response: "Set Timer of Minimum 5 minuts",
+        response: "Set Timer of Minimum 5 minutes",
         errorOccured: true,
       });
-      setMinutes(5);
-      setHours(0);
-      setSeconds(0);
+
       return;
     }
 
@@ -93,7 +91,7 @@ function CreateTimerForm({
     if (user) getAllTimers(user.uid, setTimers);
   }, []);
   return (
-    <div className="outline outline-1 rounded-md p-8 bg-green-100">
+    <div className="outline outline-1 font-[300] rounded-md p-8 bg-green-100">
       <h1 className="text-2xl text-green-900 mb-4 text-center font-semibold">
         Create Timers!
       </h1>
@@ -157,10 +155,15 @@ function CreateTimerForm({
             onChange={(e) => setSeconds(Number(e.target.value))}
           />
         </div>
-        <button type="submit">Submit Form</button>
+        <button
+          className="bg-green-700 text-green-100 py-2 px-4 rounded-md font-normal w-fit mx-auto"
+          type="submit"
+        >
+          Create Timer
+        </button>
       </form>
       <p
-        className={`my-4 text-center ${
+        className={`my-4 font-normal text-center ${
           response.errorOccured ? "text-red-700" : "text-green-700"
         }`}
       >
